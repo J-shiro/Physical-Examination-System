@@ -26,19 +26,19 @@
                         <div class="clearix"></div>
                         <ul class="news-list unstyled">
                             <li>
-                                <span class="bold">[公告]</span>系统功能正再维修中
+                                <span class="bold">[公告]</span>系统功能正在维修中
                             </li>
                             <li>
-                                <span class="bold">[公告]</span>系统功能正再维修中
+                                <span class="bold">[公告]</span>系统功能正在维修中
                             </li>
                             <li>
-                                <span class="bold">[公告]</span>系统功能正再维修中
+                                <span class="bold">[公告]</span>系统功能正在维修中
                             </li>
                             <li>
-                                <span class="bold">[公告]</span>系统功能正再维修中
+                                <span class="bold">[公告]</span>系统功能正在维修中
                             </li>
                             <li>
-                                <span class="bold">[公告]</span>系统功能正再维修中
+                                <span class="bold">[公告]</span>系统功能正在维修中
                             </li>
                         </ul>
                     </div>
