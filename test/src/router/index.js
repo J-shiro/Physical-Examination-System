@@ -9,6 +9,7 @@ import Search from '@/pages/Search/MyIndex.vue'
 import Login from '@/pages/Login/MyIndex.vue'
 import Register from '@/pages/Register/MyIndex.vue'
 import WriteInfor from '@/pages/WriteInfor/MyIndex.vue'
+import ShowResult from '@/pages/ShowResult/MyIndex.vue'
 //import { search } from 'core-js/fn/symbol';
 
 const routes = [
@@ -22,6 +23,12 @@ const routes = [
     path: '/writeinfor',
     name: 'writeinfor',
     component: WriteInfor,
+    meta:{show:true} //路由元信息
+  },
+  {
+    path: '/showresult',
+    name: 'showresult',
+    component: ShowResult,
     meta:{show:true} //路由元信息
   },
   // {

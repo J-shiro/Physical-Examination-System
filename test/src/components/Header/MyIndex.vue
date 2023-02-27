@@ -14,24 +14,23 @@
                     </div>
                     <div class="typeList">
                         <router-link to="/writeinfor" class="lj">预约填写</router-link>
-                        <a href="###" class="lj">预约结果</a>
+                        <a href="###" class="lj">体检项目</a>
                         <a href="###" class="lj">签到</a>
                         <a href="###" class="lj">支付费用</a>
-                        <a href="###" class="lj">查看体检结果</a>
-                        <a href="###" class="lj">生成体检报告</a>
+                        <router-link to="/showresult" class="lj">查看体检结果</router-link>
                         <a href="###" class="lj">我的信息</a>
                     </div>
                 </div>
             </div>
             <!--头部第二行 搜索区域-->
-            <div class="bottom">
-                <div class="searchArea">
-                    <form action="###" class="searchForm">
-                        <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
-                        <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">搜索</button><!--编程式导航-->
-                    </form>
-                </div>
-            </div>
+            <!-- <div class="bottom"> -->
+                <!-- <div class="searchArea"> -->
+                    <!-- <form action="###" class="searchForm"> -->
+                        <!-- <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" /> -->
+                        <!-- <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">搜索</button>编程式导航 -->
+                    <!-- </form> -->
+                <!-- </div> -->
+            <!-- </div> -->
         </header>
 </template>
 

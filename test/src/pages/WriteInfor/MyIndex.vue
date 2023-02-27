@@ -8,37 +8,38 @@
  <body>
   <div class="bg">
    <form method="post" autocomplete="off">
-    <br />
-    <h2 align="center">信息登记表</h2>    <br />    <br />
-    <form @submit.prevent="submitForm">
-    <p align="center" class="font">真实姓名: <input type="text" v-model="formData.name"></p><br />
-    <p align="center" class="font">你的年龄: <input type="text" v-model="formData.age"></p><br />
-    <p align="center" class="font">你的性别: &emsp;  &emsp;  &emsp;  
-      <label>
-      <input type="radio" value="男" v-model="formData.sex">
-      男
-    </label>
-    &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  
-    <label>
-      <input type="radio" value="女" v-model="formData.sex">
-      女
-    </label>
-    </p><br />
-    <p align="center" class="font">是否已婚: &emsp;  &emsp;  &ensp;  
-      <label>
-      <input type="radio" value="已婚" v-model="formData.marriage">
-      已婚
-    </label>
-    &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  
-    <label>
-      <input type="radio" value="未婚" v-model="formData.marriage">
-      未婚
-    </label>
-    </p><br />
-    <p align="center" class="font">身份证号: <input type="text" v-model="formData.id"></p><br />
-    <p align="center" class="font">手机号码: <input type="text" v-model="formData.phone"></p>
-    <p align="center" class="but"><button type="submit">提交预约信息</button></p>
-  </form>
+    <p align="center" class="title"><h2>信息登记表</h2></p>
+    <div class="wenben">
+      <form class="inner" @submit.prevent="submitForm"><br />
+        <p align="center" class="font">真实姓名: <input type="text" v-model="formData.name"></p>
+        <p align="center" class="font">你的年龄: <input type="text" v-model="formData.age"></p>
+        <p align="center" class="font">你的性别: &emsp;  &emsp;  &emsp;  
+          <label>
+          <input type="radio" value="男" v-model="formData.sex">
+          男
+        </label>
+        &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  
+        <label>
+          <input type="radio" value="女" v-model="formData.sex">
+          女
+        </label>
+        </p>
+        <p align="center" class="font">是否已婚: &emsp;  &emsp;  &ensp;  
+          <label>
+          <input type="radio" value="已婚" v-model="formData.marriage">
+          已婚
+        </label>
+        &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  
+        <label>
+          <input type="radio" value="未婚" v-model="formData.marriage">
+          未婚
+        </label>
+        </p>
+        <p align="center" class="font">身份证号: <input type="text" v-model="formData.id"></p>
+        <p align="center" class="font">手机号码: <input type="text" v-model="formData.phone"></p>
+        <p align="center"><button type="submit" class="but">提交预约信息</button></p>
+      </form>
+    </div>
    </form>
   </div>
  </body>
@@ -105,23 +106,42 @@ import axios from "axios";
 </script>
   
 <style scoped lang="less">
+   div.wenben {
+    width: 600px;
+    margin: auto;
+    height: 576px;
+    background-color: #b5bfc2c7;
+   }
+   form {
+    border-style:solid;
+    border-width:4px;
+    border-color: aliceblue;
+    background-color: #48576a;
+    .inner{
+      background-color: #e3eaf1;
+      height: 570px;
+    }
+   }
    input {
-    width:360px;
-    height:50px;                                 
+    width:320px;
+    height:35px;                                 
     border:1px solid #d4cdba;
     padding:2px; 
     font-size: 17px;
    }
    input[type="radio"] {
       width:30px;
-      height:30px; 
+      height:25px; 
    }
+   input:hover{
+				color: aliceblue;
+				background-color: #48576a;
+			}
    h2 {
       font-size: 50px;
-      color: #000000; 
+      color: #e3eaf1; 
       display : inline;
-      margin-left: 38%;
-      text-align: center;
+      
       padding-bottom: 20px;
    }
    p {
@@ -131,7 +151,20 @@ import axios from "axios";
       font-weight: 900;
       font-size: large;
    }
-   .but {
-      font-size: 30px;
+   .title{
+    background-color: #48576a;
    }
+
+   .but {
+    background-color: #48576a; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 25px;
+    border-radius: 10%;
+    cursor: pointer;//悬浮时变手指
+}
+
 </style>
