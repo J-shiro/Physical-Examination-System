@@ -67,6 +67,8 @@ import axios from "axios";
       axios.post('http://127.0.0.1:8000/api/addp', this.formData)
         .then(response => {
           console.log(response.data);
+          this.$router.push('/choose');
+          alert("预约成功！")
         })
         .catch(error => {
           console.log(error);
@@ -113,6 +115,7 @@ import axios from "axios";
     background-color: #b5bfc2c7;
    }
    form {
+    height: 750px;
     border-style:solid;
     border-width:4px;
     border-color: aliceblue;

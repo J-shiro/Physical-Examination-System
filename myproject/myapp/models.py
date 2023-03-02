@@ -122,7 +122,7 @@ class Doctor(models.Model):
     name = models.CharField(max_length=10)
     project = models.CharField(max_length=20)
     croom = models.IntegerField()
-    dnum = models.IntegerField(primary_key=True)
+    dnum = models.IntegerField()
     pwd = models.CharField(max_length=8)
 
     class Meta:
@@ -131,16 +131,16 @@ class Doctor(models.Model):
 
 
 class Exam(models.Model):
-    pid = models.CharField(primary_key=True, max_length=20)
+    id = models.CharField(primary_key=True, max_length=20)
     date = models.DateField()
     checkin = models.CharField(max_length=1)
     一般项目 = models.CharField(max_length=1)
     内科 = models.CharField(max_length=1)
     外科 = models.CharField(max_length=1)
     眼科 = models.CharField(max_length=1)
-    耳_鼻_喉 = models.CharField(db_column='耳、鼻、喉', max_length=1)  # Field renamed to remove unsuitable characters.
+    耳鼻喉 = models.CharField(max_length=1)
     口腔科 = models.CharField(max_length=1)
-    静态心电图_ecg_field = models.CharField(db_column='静态心电图(ECG)', max_length=1)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    静态心电图ecg = models.CharField(db_column='静态心电图ECG', max_length=1)  # Field name made lowercase.
     妇科 = models.CharField(max_length=1)
     尿常规12项 = models.CharField(max_length=1)
     血常规18项 = models.CharField(max_length=1)
@@ -148,14 +148,23 @@ class Exam(models.Model):
     血脂 = models.CharField(max_length=1)
     肾功能 = models.CharField(max_length=1)
     血糖 = models.CharField(max_length=1)
-    肿瘤标志物_c12_field = models.CharField(db_column='肿瘤标志物(C12)', max_length=1)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    肿瘤标志物c12 = models.CharField(db_column='肿瘤标志物C12', max_length=1)  # Field name made lowercase.
     幽门螺旋杆菌检测 = models.CharField(max_length=1)
     高清彩色多普勒b超 = models.CharField(db_column='高清彩色多普勒B超', max_length=1)  # Field name made lowercase.
-    电子计算机断层扫描_ct_field = models.CharField(db_column='电子计算机断层扫描(CT)', max_length=1)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    电子计算机断层扫描ct = models.CharField(db_column='电子计算机断层扫描CT', max_length=1)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'exam'
+
+
+class Login(models.Model):
+    name = models.CharField(primary_key=True, max_length=10)
+    password = models.CharField(max_length=20)
+
+    class Meta:
+        managed = False
+        db_table = 'login'
 
 
 class Patient(models.Model):
@@ -163,7 +172,7 @@ class Patient(models.Model):
     age = models.IntegerField()
     sex = models.CharField(max_length=1)
     marriage = models.CharField(max_length=2)
-    pid = models.CharField(primary_key=True, max_length=20)
+    id = models.CharField(primary_key=True, max_length=20)
     phone = models.CharField(max_length=15)
 
     class Meta:
@@ -172,14 +181,14 @@ class Patient(models.Model):
 
 
 class Result(models.Model):
-    pid = models.CharField(primary_key=True, max_length=20)
+    id = models.CharField(primary_key=True, max_length=20)
     一般项目 = models.CharField(max_length=100, blank=True, null=True)
     内科 = models.CharField(max_length=100, blank=True, null=True)
     外科 = models.CharField(max_length=100, blank=True, null=True)
     眼科 = models.CharField(max_length=100, blank=True, null=True)
-    耳_鼻_喉 = models.CharField(db_column='耳、鼻、喉', max_length=100, blank=True, null=True)  # Field renamed to remove unsuitable characters.
+    耳鼻喉 = models.CharField(max_length=100, blank=True, null=True)
     口腔科 = models.CharField(max_length=100, blank=True, null=True)
-    静态心电图_ecg_field = models.CharField(db_column='静态心电图(ECG)', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    静态心电图ecg = models.CharField(db_column='静态心电图ECG', max_length=100, blank=True, null=True)  # Field name made lowercase.
     妇科 = models.CharField(max_length=100, blank=True, null=True)
     尿常规12项 = models.CharField(max_length=100, blank=True, null=True)
     血常规18项 = models.CharField(max_length=100, blank=True, null=True)
@@ -187,10 +196,10 @@ class Result(models.Model):
     血脂 = models.CharField(max_length=100, blank=True, null=True)
     肾功能 = models.CharField(max_length=100, blank=True, null=True)
     血糖 = models.CharField(max_length=100, blank=True, null=True)
-    肿瘤标志物_c12_field = models.CharField(db_column='肿瘤标志物(C12)', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    肿瘤标志物c12 = models.CharField(db_column='肿瘤标志物C12', max_length=100, blank=True, null=True)  # Field name made lowercase.
     幽门螺旋杆菌检测 = models.CharField(max_length=100, blank=True, null=True)
     高清彩色多普勒b超 = models.CharField(db_column='高清彩色多普勒B超', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    电子计算机断层扫描_ct_field = models.CharField(db_column='电子计算机断层扫描(CT)', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    电子计算机断层扫描ct = models.CharField(db_column='电子计算机断层扫描CT', max_length=100, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False

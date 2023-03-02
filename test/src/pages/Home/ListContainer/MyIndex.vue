@@ -110,6 +110,7 @@
     .list-container {
         width: 1200px;
         margin: 0 auto;
+        padding-bottom: 60px;
 
         .sortList {
             height: 464px;

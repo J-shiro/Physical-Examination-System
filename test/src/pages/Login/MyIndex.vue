@@ -17,11 +17,11 @@
             <form action="##">
               <div class="input-text clearFix">
                 <span></span>
-                <input type="text" placeholder="姓名">
+                <input type="text" placeholder="姓名" v-model="formData.name">
               </div>
               <div class="input-text clearFix">
                 <span class="pwd"></span>
-                <input type="password" placeholder="请输入密码">
+                <input type="password" placeholder="请输入密码" v-model="formData.password">
               </div>
               <div class="setting clearFix">
                 <label class="checkbox inline">
@@ -30,7 +30,7 @@
                 </label>
                 <span class="forget">忘记密码？</span>
               </div>
-              <button class="btn">登&nbsp;&nbsp;录</button>
+              <button class="btn" @click.prevent="userLogin">登&nbsp;&nbsp;录</button>
             </form>
 
             <div class="call clearFix">
@@ -58,8 +58,46 @@
 </template>
 
 <script>
+import axios from "axios";
   export default {
     name: 'Login',
+    data() {
+      return {
+        formData: {
+          'name' : '',
+          'password' : '',
+        }
+      }
+    },
+    // 定义请求配置
+    config : {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    },
+    methods: {
+      userLogin() {
+        // 发送POST请求到后端API
+        axios.post('/api/login', this.formData)
+          .then((response) => {
+            if (response.data.msg=='success') {
+              // 登录成功，进行后续操作
+              localStorage.setItem('isAuthenticated', true)
+              localStorage.setItem('username', response.data.username);//res.data.username可能需要修改
+              // 登录成功，跳转到首页
+              //this.$router.push('/home')
+              this.$router.push('/home').then(() => location.reload());
+            } else {
+              // 登录失败，提示用户
+              alert("你没有注册过该名字或密码错误")
+            }
+          })
+          .catch((error) => {
+            // 处理请求错误
+            console.error(error)
+          })
+      }
+    }
   }
 </script>
 
@@ -77,12 +115,13 @@
   }
   .login-container {
     .login-wrap {
-      height: 487px;
+      height: 580px;
       background-color: #48576a;
 
       .login {
+        position: relative;
         width: 1200px;
-        height: 487px;
+        height: 500px;
         margin: 0 auto;
         //background-color: #28c4ef52;
       }
@@ -92,9 +131,9 @@
         height: 406px;
         box-sizing: border-box;
         background: #48576a;
-        float: right;
-        top: 45px;
-        position: absolute;
+        float: center;
+        top: 10%;
+        position:absolute;
         padding: 20px;
         bottom: 0;
         left: 0;

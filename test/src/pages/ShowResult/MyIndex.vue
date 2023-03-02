@@ -1,129 +1,158 @@
 <template>
- <div>
-    <h2>Patients</h2>
-    <ul>
-      <li v-for="patient in patients.list" :key="patient.id">
-        <span>{{ patient.fields.name }}</span>
-        <span>{{ patient.fields.age }}</span>
-        <span>{{ patient.fields.sex }}</span>
-        <span>{{ patient.fields.marriage }}</span>
-        <span>{{ patient.pk }}</span>
-        <span>{{ patient.fields.phone }}</span>
-      </li>
-    </ul>
-  </div>
-
-  <div class="report">
-    <h1 class="title">{{ title }}</h1>
-    <p class="info">{{ info }}</p>
-    <div class="items">
-      <div class="item" v-for="(item, index) in items" :key="index">
-        <div class="item-title">{{ item.title }}</div>
-        <div class="item-value">{{ item.value }}</div>
-        <div class="item-desc">{{ item.desc }}</div>
-      </div>
+  <div class="container">
+    <div class="a4">
+        <h1 class="title">体    检    报    告</h1>
+        <div class="border">
+          
+          <div class="category">
+            <h2 class="subtitle inline">就诊人姓名: {{ name }}</h2>
+          </div>
+        
+          <div class="line"></div>
+          <div class="category" v-for="(item, index) in projectlist" :key="index">
+            <h2 class="subtitle">{{ item }}</h2>
+              <div class="result-row">
+                <h3 class="subtitle inline">诊断结果:</h3>
+                  <span v-for="(result, idx) in resultlist[index]" :key="idx" class="result">
+                    {{ result }}
+                  </span>
+              </div>
+              <div class="result-row">
+                <h3 class="subtitle inline">诊断医师:</h3>
+                  <span v-for="(doctor, did) in doctorlist[index]" :key="did" class="doctor" >
+                    {{ doctor }}
+                  </span> 
+              </div>
+              <div class="line"></div>
+          </div>
+        
+          
+        </div>
     </div>
-    <div class="footer">
-      <p class="remark">{{ remark }}</p>
-      <p class="signature">{{ signature }}</p>
-    </div>
   </div>
-
 </template>
 
 <script>
 import axios from 'axios';
-    export default {
-        data() {
+
+export default {
+  data() {
     return {
-      patients: []
-    }
-  },
-  props: {
-    title: String,
-    info: String,
-    items: Array,
-    remark: String,
-    signature: String
+       name: '',
+       resultlist: [],
+       doctorlist: [],
+       projectlist: [],
+    };
   },
   mounted() {
-    axios.get('http://127.0.0.1:8000/api/showp').then(response => {
-      //this.patients = response.data;
-      this.patients = response.data
-      console.log(this.patients)
-    }).catch(error => {
-      console.log(error);
-    });
-  }
+    this.name = localStorage.getItem('username')
+    this.showResult()
+  },
+  methods: {
+    showResult(){
+      axios.post('http://127.0.0.1:8000/api/report', {name: this.name})
+        .then(response => {
+          if (response.data.msg=='success'){
+            this.resultlist = response.data.result
+            this.projectlist = response.data.project
+            this.doctorlist = response.data.doctor
+          }
+          else if (response.data.error_num==2){
+            alert("您还没有进行体检项目预约...")
+            // this.$router.push('/home').then(() => location.reload())
+          }
+          else if (response.data.error_num==3){
+            alert("体检仍未完成，请等待...")
+            // this.$router.push('/home').then(() => location.reload())
+          }
+          else {
+            alert("出现异常")
+            // this.$router.push('/home').then(() => location.reload())
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
+  },
+};
 </script>
 
 <style lang="less" scoped>
-    .report {
-  margin: 0 auto;
-  padding: 50px;
-  font-size: 14px;
-  line-height: 1.5;
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.container {
+  background-color: #c9d9f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding-top: 300px;
+  padding-bottom: 400px;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+}
+
+.result-row h3.inline{
+  margin-right: 30px;
+  font-size: 17px;
+}
+
+.a4 {
+  background-color: white;
+  width: 210mm;
+  height: 300mm;
+  padding: 20mm;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #2c3e50;
+  margin: 10mm;
+  margin-top: 30mm;
+  position: relative;
+}
+
+.subtitle {
+  font-size: 20px;
+}
+
+.border {
+  border: 1px solid #2c3e50;
+  height: 100%;
+  padding: 10mm;
 }
 
 .title {
-  margin: 0;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 65px;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  margin-top: -50px;
+  font-family: "楷体", "KaiTi", serif;
 }
 
-.info {
-  margin: 20px 0;
-  color: #666;
+.category {
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
-.items {
-  display: flex;
-  justify-content: space-around;
-  margin: 40px 0;
+.result {
+  font-size: 15px;
 }
 
-.item {
-  width: 300px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.doctor {
+  font-size: 20px;
+  font-family: "楷体", "KaiTi", serif;
 }
 
-.item-title {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.item-value {
-  margin: 10px 0;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.item-desc {
-  margin: 10px 0;
-  color: #666;
-}
-
-.footer {
-  margin-top: 50px;
-  text-align: left;
-}
-
-.remark {
-  margin: 0;
-  font-size: 16px;
-}
-
-.signature {
-  margin-top: 20px;
-  font-size: 16px;
-  font-weight: bold;
+.line {
+  border-top: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 </style>

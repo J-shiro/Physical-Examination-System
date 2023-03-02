@@ -10,6 +10,8 @@ import Login from '@/pages/Login/MyIndex.vue'
 import Register from '@/pages/Register/MyIndex.vue'
 import WriteInfor from '@/pages/WriteInfor/MyIndex.vue'
 import ShowResult from '@/pages/ShowResult/MyIndex.vue'
+import Choose from '@/pages/WriteInfor/MyIndex2.vue'
+import Sign from '@/pages/Sign/MyIndex.vue'
 //import { search } from 'core-js/fn/symbol';
 
 const routes = [
@@ -17,19 +19,46 @@ const routes = [
     path: '/home',
     name: 'home',
     component: Home,
-    meta:{show:true} //路由元信息
+    meta:{
+      show:true,
+      // requiresAuth: true
+    } //路由元信息
   },
   {
     path: '/writeinfor',
     name: 'writeinfor',
     component: WriteInfor,
-    meta:{show:true} //路由元信息
+    meta:{
+      show:true,
+      requiresAuth: true
+    } //路由元信息
   },
   {
-    path: '/showresult',
-    name: 'showresult',
+    path: '/sign',
+    name: 'sign',
+    component: Sign,
+    meta:{
+      show:true,
+      requiresAuth: true
+    } //路由元信息
+  },
+  {
+    path: '/choose',
+    name: 'choose',
+    component: Choose,
+    meta:{
+      show:true,
+      requiresAuth: true
+    } //路由元信息
+  },
+  {
+    path: '/report',
+    name: 'report',
     component: ShowResult,
-    meta:{show:true} //路由元信息
+    meta:{
+      show:true,
+      requiresAuth: true
+    } //路由元信息
   },
   // {
   //   path: '/about',
@@ -60,8 +89,8 @@ const routes = [
   //重定向：项目跑起来的时候，访问/的时候立马重定向到首页
   {
     path: '/',
-    redirect: '/home',
-    component: Home
+    redirect: '/login',
+    component: Login
   }
 ]
 
