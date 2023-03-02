@@ -48,11 +48,13 @@
 <style scoped lang="less">
     .footer {
         background-color: #eaeaea;
+        padding-bottom: 1px;
 
         .footer-container {
             width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
+            padding-top: 1px;
 
             .footerList {
                 padding: 20px;

@@ -7,17 +7,21 @@
                     <div class="loginList"> <!--声明式导航-->
                         <p><router-link to="/home" style="text-decoration: none;">基于vue,Django,mysql的医疗检测平台</router-link></p>
                         <p>
-                            <span><a>请</a></span>
-                            <router-link to="/login">登录</router-link>
-                            <router-link class="register" to="/register">免费注册</router-link>
+                            <!-- <span>{{ username }}</span> -->
+                            <p v-if="isAuthenticated"><a>欢迎, {{ this.username }} <button @click="logout">退出登录</button></a></p>
+                            <p v-else>
+                                <span><a>请</a></span>
+                                <router-link to="/login">登录</router-link>
+                                <router-link class="register" to="/register">免费注册</router-link>
+                            </p>
                         </p>
                     </div>
                     <div class="typeList">
                         <router-link to="/writeinfor" class="lj">预约填写</router-link>
-                        <a href="###" class="lj">体检项目</a>
-                        <a href="###" class="lj">签到</a>
+                        <router-link to="/choose" class="lj">体检项目</router-link>
+                        <router-link to="/sign" class="lj">签到</router-link>
                         <a href="###" class="lj">支付费用</a>
-                        <router-link to="/showresult" class="lj">查看体检结果</router-link>
+                        <router-link to="/report" class="lj">查看体检结果</router-link>
                         <a href="###" class="lj">我的信息</a>
                     </div>
                 </div>
@@ -39,19 +43,35 @@
         name: "",
         data(){
             return{
-                keyword:''
+                // keyword:''
+                'username': '',
+                'isAuthenticated':'',
             }
         },
+        mounted() {
+            // 页面加载后从本地存储中获取用户名并赋值给username
+            this.username = localStorage.getItem('username')
+            //console.log(this.username)
+            this.isAuthenticated = localStorage.getItem('isAuthenticated')
+            //console.log(this.isAuthenticated)
+        },
         methods: {
+            logout() {
+                localStorage.removeItem('isAuthenticated');
+                localStorage.removeItem('username');
+                //location.reload();
+                this.$router.push('/login').then(()=>location.reload());
+                
+            },
             //搜索按钮的回调函数：向search路由进行跳转
-            goSearch(){
-                //路由传递参数：1字符串形式 param 和 query
-                //this.$router.push('/search/'+this.keyword+"?k="+this.keyword.toUpperCase())
-                //2模板字符串
-                //this.$router.push(`/search/${this.keyword}?k=${this.keyword.toUpperCase()}`)
-                //3对象
-                this.$router.push({name:"search",params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
-            }
+            // goSearch(){
+            //     //路由传递参数：1字符串形式 param 和 query
+            //     //this.$router.push('/search/'+this.keyword+"?k="+this.keyword.toUpperCase())
+            //     //2模板字符串
+            //     //this.$router.push(`/search/${this.keyword}?k=${this.keyword.toUpperCase()}`)
+            //     //3对象
+            //     this.$router.push({name:"search",params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
+            // }
         }
     }
 </script>
@@ -65,14 +85,13 @@
             line-height: 30px;
 
             .container {
-                width: 1200px;
+                //width: 1200px;
                 margin: 0 auto;
                 margin-left: 1%;
                 overflow: hidden;
 
                 .loginList {
                     float: left;
-
                     p {
                         float: left;
                         margin-right: 15px;
@@ -91,6 +110,7 @@
 
                 .typeList {
                     float: right;
+                    position: relative;
                     font-size: 15px;
                     a {
                         padding: 0 10px;
