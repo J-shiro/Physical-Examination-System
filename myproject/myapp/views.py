@@ -76,7 +76,8 @@ def add_patient(request):
     response = {}
     try:
         patient = Patient()
-        name = json.loads(request.body).get("name")
+        pname = json.loads(request.body).get("name")
+        curP = Login.objects.filter(name=pname)
         age = json.loads(request.body).get("age")
         sex = json.loads(request.body).get("sex")
         marriage = json.loads(request.body).get("marriage")
@@ -85,7 +86,7 @@ def add_patient(request):
         # print(sex)
         # print(phone)
 
-        patient.name = name
+        patient.name = pname
         patient.age = age
         patient.sex = sex
         patient.marriage = marriage
@@ -96,13 +97,16 @@ def add_patient(request):
         patient.save()
         # print("save.....................")
         # models.Patient.objects.create(name=name,age=age,sex=sex,marriage=marriage,pid=pid,phone=phone)
-        response['msg'] = 'success'
-        response['error_num'] = 0
-
+        if not curP.exists():
+            response['msg'] = 'fail'
+            response['error_num'] = 1 #名字不存在
+        else:
+            response['msg'] = 'success'
+            response['error_num'] = 0 #成功
     except  Exception as e:
         print(e)
         response['msg'] = str(e)
-        response['error_num'] = 1
+        response['error_num'] = 10
 
     return JsonResponse(response)
 
