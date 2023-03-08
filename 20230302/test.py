@@ -26,13 +26,13 @@ passwd0 = "12345678"
 
 class Pagedetail:
     def __init__(self, page):
-        self.conn = pymysql.connect(
+        self.conn = pymysql.connect( #创建数据库连接对象
             host=host0, port=port0, database=database0, charset=charset0, user=user0,
             passwd=passwd0
         )
         self.time = {}
 
-        self.var = tk.StringVar()
+        self.var = tk.StringVar() #可变字符串对象
         self.var1 = tk.StringVar()
         self.var2 = tk.StringVar()
         self.var3 = tk.StringVar()
@@ -57,11 +57,11 @@ class Pagedetail:
             self.tree.column(x, width=y, anchor="center")
         self.tree.grid(row=1, columnspan=7)  # columnspan=3合并单元格，横跨3列
 
-        self.cursor = self.conn.cursor()
+        self.cursor = self.conn.cursor() #创建游标对象
         query = "SELECT name,age,sex,marriage,patient.id,phone,date,checkin FROM patient,exam where patient.id=exam.id"
         try:
-            self.cursor.execute(query)
-            results = self.cursor.fetchall()
+            self.cursor.execute(query) #执行查询语句
+            results = self.cursor.fetchall() #获取查询结果
             for row in results:
                 name = row[0]
                 age = row[1]
@@ -76,18 +76,18 @@ class Pagedetail:
             print(e)
         finally:
             self.cursor.close()
-            self.conn.close()
+            self.conn.close() #关闭
 
         #     cpt = 0 # Counter representing the ID of your code.
         #     for row in self.cursor:
-        self.tree.bind("<ButtonRelease-1>", self.click_bf)
+        self.tree.bind("<ButtonRelease-1>", self.click_bf) #鼠标左键释放时触发self.click_bf函数
         #        # I suppose the first column of your table is ID
         #         self.tree.insert('', 'end', text=str(cpt), values=(row[1], row[2], row[3]))
         #         cpt += 1 
         # 绑定的单击函数
 
-    def click_bf(self, event):  # 单击
-        print(event)
+    def click_bf(self, event):  # 单击获取
+        print(event) #鼠标的坐标、事件类型、发生时间
 
 
 class Pagelogin:
@@ -179,7 +179,7 @@ class Pagelogin:
                     else:
                         tk.messagebox.showerror('提示', message='用户名或密码错误')
         except Exception as e:
-            print("asasasa")
+            #print("asasasa")
             print("数据库操作异常：\n", e)
         finally:
             print("close")
@@ -217,7 +217,7 @@ if __name__ == '__main__':
     height=300
     width=600
     loginpage.geometry('%dx%d+%d+%d'%(width, height, (loginpage.winfo_screenwidth()-width)/2, (loginpage.winfo_screenheight()-height)/2))
-                    
+                    #设置窗口的大小和位置
     Pagelogin(loginpage)
 
 """
