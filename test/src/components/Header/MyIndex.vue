@@ -63,15 +63,6 @@
                 this.$router.push('/login').then(()=>location.reload());
                 
             },
-            //搜索按钮的回调函数：向search路由进行跳转
-            // goSearch(){
-            //     //路由传递参数：1字符串形式 param 和 query
-            //     //this.$router.push('/search/'+this.keyword+"?k="+this.keyword.toUpperCase())
-            //     //2模板字符串
-            //     //this.$router.push(`/search/${this.keyword}?k=${this.keyword.toUpperCase()}`)
-            //     //3对象
-            //     this.$router.push({name:"search",params:{keyword:this.keyword},query:{k:this.keyword.toUpperCase()}})
-            // }
         }
     }
 </script>
@@ -129,17 +120,6 @@
             width: 1200px;
             margin: 0 auto;
             overflow: hidden;
-
-            // .logoArea {
-            //     float: left;
-
-            //     .logo {
-            //         img {
-            //             width: 175px;
-            //             margin: 25px 45px;
-            //         }
-            //     }
-            // }
 
             .searchArea {
                 float: right;

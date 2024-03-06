@@ -12,7 +12,7 @@ import WriteInfor from '@/pages/WriteInfor/MyIndex.vue'
 import ShowResult from '@/pages/ShowResult/MyIndex.vue'
 import Choose from '@/pages/WriteInfor/MyIndex2.vue'
 import Sign from '@/pages/Sign/MyIndex.vue'
-//import { search } from 'core-js/fn/symbol';
+
 
 const routes = [
   {
@@ -21,7 +21,6 @@ const routes = [
     component: Home,
     meta:{
       show:true,
-      // requiresAuth: true
     } //路由元信息
   },
   {
@@ -31,7 +30,7 @@ const routes = [
     meta:{
       show:true,
       requiresAuth: true
-    } //路由元信息
+    }
   },
   {
     path: '/sign',
@@ -40,7 +39,7 @@ const routes = [
     meta:{
       show:true,
       requiresAuth: true
-    } //路由元信息
+    }
   },
   {
     path: '/choose',
@@ -49,7 +48,7 @@ const routes = [
     meta:{
       show:true,
       requiresAuth: true
-    } //路由元信息
+    }
   },
   {
     path: '/report',
@@ -58,16 +57,8 @@ const routes = [
     meta:{
       show:true,
       requiresAuth: true
-    } //路由元信息
+    }
   },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  // }
   {
     path: '/login',
     name: 'login',

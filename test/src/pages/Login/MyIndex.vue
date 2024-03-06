@@ -85,7 +85,6 @@ import axios from "axios";
               localStorage.setItem('isAuthenticated', true)
               localStorage.setItem('username', response.data.username);//res.data.username可能需要修改
               // 登录成功，跳转到首页
-              //this.$router.push('/home')
               this.$router.push('/home').then(() => location.reload());
             } else {
               // 登录失败，提示用户
