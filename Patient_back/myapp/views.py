@@ -12,20 +12,21 @@ from django.db import models
 from .models import *
 
 
-@csrf_exempt
-@require_http_methods(['POST'])
+
+@csrf_exempt                    # 关闭csrf保护便于开发
+@require_http_methods(['POST']) # 只接受 HTTP POST 请求
 def register(request):
     response = {}
     try:
+        # 提取 JSON 数据，获取用户名， 密码
         name = json.loads(request.body).get("name")
         password = json.loads(request.body).get("password")
-        # Login.objects.create(name=name,password=password)
         print("name: {}, pwd: {}".format(name, password))
-        reg = Login()
+
+        reg = Login()   # 创建 Login 模型的实例
         reg.name = name
         reg.password = password
-        reg.save()
-        # print("name: {}, pwd: {}".format(login.name, login.password))
+        reg.save()  # 保存到数据库
 
         response['msg'] = 'success'
         response['error_num'] = 0
@@ -43,12 +44,14 @@ def register(request):
 def login(request):
     response = {}
     try:
-        print(request.body)
+        # print(request.body)
         name = json.loads(request.body).get("name")
         pwd = json.loads(request.body).get("password")
-        all_login = Login.objects.all()
+
+        all_login = Login.objects.all() # 查询所有的 Login 模型实例
         login_succ = 0
         print("name: {} pwd: {}".format(name, pwd))
+
         for cur in all_login:
             if cur.name == name and cur.password == pwd:
                 login_succ = 1
@@ -68,14 +71,14 @@ def login(request):
     return JsonResponse(response)
 
 
-# Create your views here.
 @csrf_exempt
 @require_http_methods(['POST'])
 def add_patient(request):
-    # print("add.....................")
+
     response = {}
     try:
         patient = Patient()
+
         pname = json.loads(request.body).get("name")
         curP = Login.objects.filter(name=pname)
         age = json.loads(request.body).get("age")
@@ -83,8 +86,7 @@ def add_patient(request):
         marriage = json.loads(request.body).get("marriage")
         id = json.loads(request.body).get("id")
         phone = json.loads(request.body).get("phone")
-        # print(sex)
-        # print(phone)
+        # print(sex, phone)
 
         patient.name = pname
         patient.age = age
@@ -95,8 +97,7 @@ def add_patient(request):
 
         # print(patient.name)
         patient.save()
-        # print("save.....................")
-        # models.Patient.objects.create(name=name,age=age,sex=sex,marriage=marriage,pid=pid,phone=phone)
+
         if not curP.exists():
             response['msg'] = 'fail'
             response['error_num'] = 1 #名字不存在
@@ -117,6 +118,7 @@ def choose_project(request):
     response = {}
     try:
         exam = Exam()
+
         exam.id = json.loads(request.body).get("id")
         exam.date = json.loads(request.body).get("date")
         exam.checkin = '否'
@@ -159,15 +161,21 @@ def sign(request):
     try:
         pname = json.loads(request.body).get("name")
         print("sign pname: {}".format(pname))
-        curP = Patient.objects.filter(name=pname)
+
+        curP = Patient.objects.filter(name=pname) # 查询患者记录,包含了满足条件 name=pname 的 Patient 模型的所有记录
+        
         if curP.exists():
-            pid = curP.first().id
-            all_exam = Exam.objects.all()
+            pid = curP.first().id   # 获取查询集中的第一条记录
+
+            all_exam = Exam.objects.all()   # 查询所有的体检项目
             all_pid = []
+
             for each_exam in all_exam:
                 all_pid.append(each_exam.id)
-            if pid in all_pid:
+            
+            if pid in all_pid:  # 判断患者的ID是否在体检项目ID列表中
                 Exam.objects.filter(id=pid).update(checkin="是")
+                # 更新体检项目的checkin属性为 "是"
 
                 response['msg'] = 'success'
                 response['error_num'] = 0
@@ -195,9 +203,9 @@ def sign(request):
 def show_report(request):
     response = {}
     try:
-        # print("result..............")
         pname = json.loads(request.body).get("name")
         # print("pname: {}".format(pname))
+
         curP = Patient.objects.filter(name=pname)
         if curP.exists():
             pid = curP.first().id
@@ -205,6 +213,7 @@ def show_report(request):
             all_pid = []
             for curR in all_result:
                 all_pid.append(curR.id)
+
             # errornum=2 还没有进行体检项目预约
             if pid not in all_pid:
                 response['msg'] = 'failed'
@@ -221,14 +230,28 @@ def show_report(request):
 
         proj_list = ['一般项目', '内科', '外科', '眼科', '耳鼻喉', '口腔科', '静态心电图ecg', '妇科', '尿常规12项', '血常规18项', '肝功能', '血脂', '肾功能',
                      '血糖', '肿瘤标志物c12', '幽门螺旋杆菌检测', '高清彩色多普勒b超', '电子计算机断层扫描ct']
-        # report_list = list(report.values_list(*proj_list))[0]
+
         report_list = [val if val is not None else "NONE" for val in report.values_list(*proj_list)[0]]
+        '''
+            仅包含在proj_list 中
+            values_list方法用于 获取模型所有报告的对应字段的值
+            如果 val 不为 None, 则保持原值;
+            如果 val 为 None, 则替换为字符串 "NONE"
+        '''
         print(report_list)
+        '''
+           ['NONE', '滕江-各项均正常', 'NONE', '别丹-不正常', 'NONE', 'NONE', 'NONE', 'NONE', 
+           'NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE']
+        '''
 
         report_list_list = list(report_list)
         print(report_list_list)
+        '''
+            ['NONE', '滕江-各项均正常', 'NONE', '别丹-不正常', 'NONE', 'NONE', 'NONE', 'NONE', 
+            'NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE', 'NONE']
+        '''
 
-        print(proj_list)
+        # print(proj_list)
         # 把没有体检的项目去除
         while True:
             for index in range(len(report_list_list)):
@@ -240,8 +263,14 @@ def show_report(request):
             if "NONE" not in report_list_list:
                 break
         print(report_list_list)
-        print(proj_list)
+        '''
+            ['滕江-各项均正常', '别丹-不正常']
+        '''
 
+        print(proj_list)
+        '''
+            ['内科', '眼科']
+        '''
         # 把医生姓名和检查结果再分离开
         doctor_list = []
         result_list = []
@@ -252,15 +281,15 @@ def show_report(request):
             result_list.append(late)
 
         print(result_list)
+        '''
+            ['各项均正常', '不正常']
+        '''
 
-        # report_list = tuple(report_list_list)
         result_list = tuple(result_list)
 
-        print(".....{}.\n".format(report_list))
         response['result'] = result_list
         response['doctor'] = doctor_list
         response['project'] = proj_list
-        # print(response['report'])
         response['msg'] = 'success'
         response['error_num'] = 0
 

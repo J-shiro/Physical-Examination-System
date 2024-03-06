@@ -73,18 +73,6 @@ import axios from "axios";
         return this.formData.password === this.formData.password1
       }
     },
-    // watch: {
-    //   password(val) {
-    //     if (this.password1) {
-    //       this.passwordMatch = val === this.password1
-    //     }
-    //   },
-    //   password1(val) {
-    //     if (this.password) {
-    //       this.passwordMatch = val === this.password
-    //     }
-    //   }
-    // },
     methods: {
       userRegister() {
         this.isSubmitted = true
