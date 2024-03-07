@@ -3,7 +3,7 @@
 
 ## 初始化
 
-将sql文件导入本地的数据库，更改`Django: Patient_back`和`Python: Docter`两个文件夹下的数据库设置
+将sql文件导入本地的数据库，更改`Django: Patient_back`和`Python: Doctor`两个文件夹下的数据库设置
 
 ![image-20240306215704862](README.assets/image-20240306215704862.png)
 
@@ -21,7 +21,7 @@ npm run serve
 python manage.py runserver
 ```
 
-进入`Docter`文件夹，直接运行`Run.py`文件启动医生前台及医生登录端
+进入`Doctor`文件夹，直接运行`Run.py`文件启动医生前台及医生登录端
 
 ```shell
 python test.py
@@ -79,7 +79,7 @@ python test.py
 
 ## 数据库展示
 
-### docter
+### doctor
 
 ![image-20230302134435273](README.assets/image-20230302134435273.png)
 
