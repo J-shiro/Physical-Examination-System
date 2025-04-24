@@ -8,7 +8,7 @@
  <body>
   <div class="bg">
    <form method="post" autocomplete="off">
-    <p align="center" class="title"><h2>信息登记表</h2></p>
+    <div align="center" class="title"><h2>信息登记表</h2></div>
     <div class="wenben">
       <form class="inner" @submit.prevent="submitForm"><br />
         <p align="center" class="font">真实姓名: <input type="text" v-model="formData.name" required></p>

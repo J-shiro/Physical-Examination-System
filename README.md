@@ -1,21 +1,23 @@
 # Physical-Examination-System
-上海大学2022-2023年冬季学期数据库课程期末项目：基于vue、Django、mysql和tkinter的智慧体检系统。
+
+上海大学 2022-2023 年冬季学期数据库课程期末项目：基于 vue、Django、mysql 和 tkinter 的智慧体检系统。
 
 ## 初始化
 
-将sql文件导入本地的数据库，更改`Django: Patient_back`和`Python: Doctor`两个文件夹下的数据库设置
+将 sql 文件导入本地的数据库，更改`Django: Patient_back`和`Python: Doctor`两个文件夹下的数据库设置
 
 ![image-20240306215704862](README.assets/image-20240306215704862.png)
 
 ## 运行
 
-从终端进入`test`文件夹启动vue前端界面
+从终端进入`test`文件夹启动 vue 前端界面
 
 ```shell
+npm install
 npm run serve
 ```
 
-进入`Patient_back`文件夹启动Django后端
+进入`Patient_back`文件夹启动 Django 后端
 
 ```shell
 python manage.py runserver

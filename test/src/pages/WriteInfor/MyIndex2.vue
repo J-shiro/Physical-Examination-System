@@ -8,7 +8,7 @@
      <body>
       <div class="bg">
        <form method="post" autocomplete="off">
-        <p align="center" class="title"><h2>选择体检项目</h2></p><br/>
+        <div align="center" class="title"><h2>选择体检项目</h2></div><br/>
         <div class="wenben">
           <form class="inner" @submit.prevent="submitForm"><br /><br /><br />
             <div class="wrap">
